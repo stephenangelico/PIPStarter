@@ -1,6 +1,14 @@
 #!/usr/bin/env python3
 # Simple script to play Fizz Buzz up to a certain point.
 import sys
+try:
+    int(sys.argv[1])
+except ValueError:
+    print("Can't convert {} to an integer".format(sys.argv[1]))
+    sys.exit(1)
+except IndexError:
+    pass
+
 if len(sys.argv) == 1:
     incap = input("To what integer do you wish to play? (default = 100) ")
 else:
