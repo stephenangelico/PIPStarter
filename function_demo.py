@@ -30,14 +30,12 @@ if __name__ == '__main__':
   
   def side_effect_test(value):
     # Do something to modify the value
-    value[1] = "A superior format of home video"
+    value[2] = 8
     print("Inside the function, the value becomes {}".format(value))
 
 if __name__ == "__main__":
     # Create the value
-    value = {"Camp": "A fun place to spend a week",
-            "DVD": "An outdated format of home video",
-            "Election": "Vote on which bunch of nitwits interferes with life"}
+    value = {2,4,3}
     print("Outside the function, the value starts as {}".format(value))
 
     side_effect_test(value)
