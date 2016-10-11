@@ -34,7 +34,7 @@ def loyalty():
 
 def order():
 	for dict_key in questions:
-	ingredtype = input(questions[dict_key])
+		ingredtype = input(questions[dict_key])
 	if ingredtype == 'y' or ingredtype == 'Y' or ingredtype == 'yes' or ingredtype == 'Yes':
 		ingredtype = True
 	else:
