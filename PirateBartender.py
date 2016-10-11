@@ -16,9 +16,19 @@ ingredients = {
     "sweet": ["sugar cube", "spoonful of honey", "spash of cola"],
     "fruity": ["slice of orange", "dash of cassis", "cherry on top"],
 }
+customers = {}
 preferences = {}
 recipe = []
 # Psuedo-code follows
+def loyalty():
+	customername = input("Avast, landlubber! Who goes there?")
+	if customers.get(customername) == '':
+		usual = input("Arr! Welcome back! Yer usual?")
+		if usual == 'y' or usual == 'Y' or usual == 'yes' or usual == 'Yes':
+			usual = True
+		else:
+			usual = False
+
 def order():
     for dict_key in questions:
         ingredtype = input(questions[dict_key])
@@ -33,7 +43,9 @@ def make():
        if preferences[preference] == True:
            recipe.append(random.choice(ingredients[preference]))
 
-order()
-print(preferences)
-make()
-print(recipe)
+if __name__ == '__main__':
+	order()
+	print(preferences)
+	make()
+	print(recipe)
+	
