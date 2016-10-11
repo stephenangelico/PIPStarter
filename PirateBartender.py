@@ -33,13 +33,13 @@ def loyalty():
 			usual = False
 
 def order():
-	for dict_key in questions:
-		ingredtype = input(questions[dict_key])
+	for question in questions:
+		ingredtype = input(questions[question])
 		if ingredtype == 'y' or ingredtype == 'Y' or ingredtype == 'yes' or ingredtype == 'Yes':
 			ingredtype = True
 		else:
 			ingredtype = False
-		preferences[dict_key] = ingredtype
+		preferences[question] = ingredtype
 
 def make():
 	for preference in preferences:
