@@ -28,14 +28,18 @@ def loyalty():
 		order()
 		make()
 		customers[customername] = recipe
+
 	else:
 		usual = input("Arr! Welcome back! Yer usual? ")
 		if usual == 'y' or usual == 'Y' or usual == 'yes' or usual == 'Yes':
-			usual = True
+			print(customers[customername])
 		else:
-			usual = False
+			order()
+			make()
+			customers[customername] = recipe
 
 def order():
+	del recipe[:]
 	for question in questions:
 		ingredtype = input(questions[question])
 		if ingredtype == 'y' or ingredtype == 'Y' or ingredtype == 'yes' or ingredtype == 'Yes':
@@ -50,7 +54,8 @@ def make():
 			recipe.append(random.choice(ingredients[preference]))
 
 while __name__ == '__main__':
-	preferences.clear()
 	loyalty()
 	print(preferences)
 	print(recipe)
+	print(customers)
+	preferences.clear()
