@@ -19,14 +19,17 @@ ingredients = {
 customers = {}
 preferences = {}
 recipe = []
-# Psuedo-code follows
 def loyalty():
-	customername = input("Avast, landlubber! Who goes there?")
-	if customers.get(customername) == '':
+	customername = input("Avast, landlubber! Who goes there? ")
+	try:
+		customers[customername] == ''
+	except KeyError:
 		print("Ye must be new here.")
 		order()
+		make()
+		customers[customername] = recipe
 	else:
-		usual = input("Arr! Welcome back! Yer usual?")
+		usual = input("Arr! Welcome back! Yer usual? ")
 		if usual == 'y' or usual == 'Y' or usual == 'yes' or usual == 'Yes':
 			usual = True
 		else:
@@ -46,8 +49,8 @@ def make():
 		if preferences[preference] == True:
 			recipe.append(random.choice(ingredients[preference]))
 
-if __name__ == '__main__':
-	order()
+while __name__ == '__main__':
+	preferences.clear()
+	loyalty()
 	print(preferences)
-	make()
 	print(recipe)
