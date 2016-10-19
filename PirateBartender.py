@@ -68,6 +68,7 @@ def loyalty():
 	else:
 		usual = input("Arr! Welcome back! Yer usual? ")
 		if usual == 'y' or usual == 'Y' or usual == 'yes' or usual == 'Yes':
+			#destock(customers.get[customername][0])
 			pass
 		else:
 			customers[customername] = order()
@@ -79,8 +80,7 @@ def order():
 		ingredtype = input(questions[question])
 		if ingredtype == 'y' or ingredtype == 'Y' or ingredtype == 'yes' or ingredtype == 'Yes':
 			recipe.append(make(question))
-	for ingredient in recipe:
-		ingredstock[ingredient] -= 1
+	destock(recipe)
 	return(recipe,drinkname(recipe))
 
 def make(preference):
@@ -95,6 +95,10 @@ def drinkname(recipe):
 	except KeyError:
 		drinknames[drinkid] = random.choice(nameadjectives) + ' ' + random.choice(namenouns)
 	return(drinknames[drinkid])
+
+def destock(recipe):
+	for ingredient in recipe:
+		ingredstock[ingredient] -= 1
 
 def restock():
 	for ingredient in ingredstock:
