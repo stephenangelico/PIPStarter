@@ -16,3 +16,11 @@ class Guitarist(Musician):
 	def tune(self):
 		print("Be with you in a moment")
 		print("Twoning, sproing, splang")
+
+class Drummer(Musician):
+	def __init__(self):
+		super().__init__(["Boom", "Crash", "Ting"])
+	def count_time():
+		print("One, Two, Three, Four!")
+	def combust():
+		print("FOOOM!")
