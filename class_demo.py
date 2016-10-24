@@ -1,3 +1,4 @@
+import random
 class Musician(object):
 	def __init__(self, sounds, name):
 		self.name = name
@@ -38,11 +39,17 @@ class Band(object):
 		self.drummer.count_time()
 		for member in self.members:
 			member.solo(4)
+		if random.randint(1,10) == 10:
+			self.drummer.combust()
 	def hire(self, musician):
 		self.members.append(musician)
 		print("Please welcome {} to the stage!".format(musician.name))
+		print(self.members)
+	#def fire(self, musician):
+	#	self.members.remove(musician)
 		
 PIP_Rollers = Band(Guitarist("Matthew"), Drummer("Ben"))
 PIP_Rollers.jam()
 PIP_Rollers.hire(Bassist("Henry"))
 PIP_Rollers.jam()
+#PIP_Rollers.fire(Bassist("Henry"))
