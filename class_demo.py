@@ -29,11 +29,11 @@ class Drummer(Musician):
 
 class Band(object):
 	def __init__(self, guitarist, drummer):
-		self.members = []
-		self.guitarist = guitarist
-		self.drummer = drummer
-		self.members.append(guitarist)
-		self.members.append(drummer)
+		self.members = {}
+		self.guitarist = Guitarist(guitarist)
+		self.drummer = Drummer(drummer)
+		self.members.add(guitarist:Guitarist(guitarist))
+		self.members.add(drummer:Drummer(drummer))
 		self.guitarist.tune()
 	def jam(self):
 		self.drummer.count_time()
@@ -48,8 +48,10 @@ class Band(object):
 	#def fire(self, musician):
 	#	self.members.remove(musician)
 		
-PIP_Rollers = Band(Guitarist("Matthew"), Drummer("Ben"))
+PIP_Rollers = Band("Matthew", "Ben")
 PIP_Rollers.jam()
 PIP_Rollers.hire(Bassist("Henry"))
 PIP_Rollers.jam()
 #PIP_Rollers.fire(Bassist("Henry"))
+for member in PIP_Rollers.members():
+	print(member.name)
