@@ -29,12 +29,12 @@ class Drummer(Musician):
 		print("FOOOM!")
 
 class Band(object):
-	def __init__(self, guitar, drum):
-		self.members = {}
-		self.guitarist = Guitarist(guitar)
-		self.drummer = Drummer(drum)
-		self.members(guitar) = self.guitarist
-		self.members(drum) = self.drummer
+	def __init__(self, guitarist, drummer):
+		self.members = []
+		self.guitarist = guitarist
+		self.drummer = drummer
+		self.members.append(guitarist)
+		self.members.append(drummer)
 		self.guitarist.tune()
 	def jam(self):
 		self.drummer.count_time()
@@ -42,17 +42,23 @@ class Band(object):
 			member.solo(4)
 		if random.randint(1,10) == 10:
 			self.drummer.combust()
-	def hire(self, musician, instrument):
+	def hire(self, musician):
 		self.members.append(musician)
 		print("Please welcome {} to the stage!".format(musician.name))
-		print(self.members)
-	#def fire(self, musician):
-	#	self.members.remove(musician)
+		for member in self.members:
+			print(member.name)
+	def fire(self, musician):
+		redundant = -1
+		for x in range(len(self.members)):
+			if self.members[x].name == musician:
+				redundant = x
+		if redundant != -1:
+			del self.members[redundant]
+		for member in self.members:
+			print(member.name)
 		
-PIP_Rollers = Band("Matthew", "Ben")
+PIP_Rollers = Band(Guitarist("Matthew"), Drummer("Ben"))
 PIP_Rollers.jam()
 PIP_Rollers.hire(Bassist("Henry"))
 PIP_Rollers.jam()
-#PIP_Rollers.fire(Bassist("Henry"))
-for member in PIP_Rollers.members():
-	print(member.name)
+PIP_Rollers.fire("Henry")
