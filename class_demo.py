@@ -44,12 +44,20 @@ class Band(object):
 	def hire(self, musician):
 		self.members.append(musician)
 		print("Please welcome {} to the stage!".format(musician.name))
-		print(self.members)
-	#def fire(self, musician):
-	#	self.members.remove(musician)
+		for member in self.members:
+			print(member.name)
+	def fire(self, musician):
+		redundant = -1
+		for x in range(len(self.members)):
+			if self.members[x].name == musician:
+				redundant = x
+		if redundant != -1:
+			del self.members[redundant]
+		for member in self.members:
+			print(member.name)
 		
 PIP_Rollers = Band(Guitarist("Matthew"), Drummer("Ben"))
 PIP_Rollers.jam()
 PIP_Rollers.hire(Bassist("Henry"))
 PIP_Rollers.jam()
-#PIP_Rollers.fire(Bassist("Henry"))
+PIP_Rollers.fire("Henry")
