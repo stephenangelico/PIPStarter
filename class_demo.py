@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import random
 class Musician(object):
 	def __init__(self, sounds, name):
@@ -28,12 +29,12 @@ class Drummer(Musician):
 		print("FOOOM!")
 
 class Band(object):
-	def __init__(self, guitarist, drummer):
+	def __init__(self, guitar, drum):
 		self.members = {}
-		self.guitarist = Guitarist(guitarist)
-		self.drummer = Drummer(drummer)
-		self.members.add(guitarist:Guitarist(guitarist))
-		self.members.add(drummer:Drummer(drummer))
+		self.guitarist = Guitarist(guitar)
+		self.drummer = Drummer(drum)
+		self.members(guitar) = self.guitarist
+		self.members(drum) = self.drummer
 		self.guitarist.tune()
 	def jam(self):
 		self.drummer.count_time()
@@ -41,7 +42,7 @@ class Band(object):
 			member.solo(4)
 		if random.randint(1,10) == 10:
 			self.drummer.combust()
-	def hire(self, musician):
+	def hire(self, musician, instrument):
 		self.members.append(musician)
 		print("Please welcome {} to the stage!".format(musician.name))
 		print(self.members)
