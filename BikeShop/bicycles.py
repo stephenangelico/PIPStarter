@@ -48,6 +48,12 @@ class Customer(object):
 		self.owned = ''
 	def pricecheck(self, model, shopname):
 		return shopname.getprice(model)
+	#def affordrange(self, model, shopname):
+		# Get available models from shop
+		#for model in shopname.inventory: #TODO: fix syntax
+			# Check if in stock first
+			# See if price is less than budget
+			# Populate an array with valid models
 	#def choosemodel():
 	def getbike(self, model, shopname):
 		#Get model price and check if within budget,
