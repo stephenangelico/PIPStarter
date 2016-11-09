@@ -33,6 +33,8 @@ class Shop(object):
 				}
 		self.margin = 0.2
 		self.profit = 0
+		for model in self.inventory:
+			print(model + ": " + str(self.inventory[model]["Count"]))
 	def getprice(self, model):
 		return self.inventory[model]["Cost"] * (1 + self.margin)
 	def sellbike(self, model):
@@ -42,19 +44,26 @@ class Shop(object):
 class Customer(object):
 	#Needs name and funds
 	#Must be able to purchase and own a bike
-	def __init__(self, name, budget):
+	def __init__(self, name, budget, feature):
 		self.name = name
 		self.budget = budget
+		self.feature = feature
 		self.owned = ''
+		self.affordablerange = {}
 	def pricecheck(self, model, shopname):
 		return shopname.getprice(model)
-	#def affordrange(self, model, shopname):
+	def affordrange(self, shopname):
 		# Get available models from shop
-		#for model in shopname.inventory: #TODO: fix syntax
+		for bikemodel in shopname.inventory:
 			# Check if in stock first
 			# See if price is less than budget
-			# Populate an array with valid models
+			if shopname.inventory[bikemodel]["Count"] > 0 and self.pricecheck(bikemodel, shopname) <= self.budget:
+				# Populate a dictionary with valid models
+				self.affordablerange[bikemodel] = self.pricecheck(bikemodel, shopname)
+		print(self.affordablerange)
 	#def choosemodel():
+	#	if self.feature == "lowprice":
+			
 	def getbike(self, model, shopname):
 		#Get model price and check if within budget,
 		price = self.pricecheck(model, shopname)
