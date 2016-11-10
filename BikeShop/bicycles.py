@@ -44,10 +44,10 @@ class Shop(object):
 class Customer(object):
 	#Needs name and funds
 	#Must be able to purchase and own a bike
-	def __init__(self, name, budget, feature):
+	def __init__(self, name, budget, spec):
 		self.name = name
 		self.budget = budget
-		self.feature = feature
+		self.spec = spec
 		self.owned = ''
 		self.affordablerange = {}
 	def pricecheck(self, model, shopname):
@@ -61,9 +61,19 @@ class Customer(object):
 				# Populate a dictionary with valid models
 				self.affordablerange[bikemodel] = self.pricecheck(bikemodel, shopname)
 		print(self.affordablerange)
-	#def choosemodel():
-	#	if self.feature == "lowprice":
-			
+	def choosemodel():
+		# Lowest price
+		if self.spec == "lowprice":
+			#Use dict.itervalues
+		#Lowest weight
+		elif self.spec == "weight":
+			#Use dict.itervalues
+		#must have teen
+		elif self.spec == "teen":
+			return("20-inch hybrid road-mountain bike")
+		#must have trainer
+		elif self.spec == "trainer":
+			return("Training bike for kids")
 	def getbike(self, model, shopname):
 		#Get model price and check if within budget,
 		price = self.pricecheck(model, shopname)
