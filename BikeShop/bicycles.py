@@ -11,11 +11,11 @@ class Shop(object):
 	#Must manage and track profits
 	def __init__(self, name):
 		self.name = name
-		self.trainer = Bike("Training bike for kids",15,150) 
-		self.bmx = Bike("BMX stunt bike",20,275)
-		self.teen = Bike("20-inch hybrid road-mountain bike",25,220)
+		self.trainer = Bike("Training bike for kids",17,80) 
+		self.bmx = Bike("BMX stunt bike",20,160)
+		self.teen = Bike("20-inch hybrid road-mountain bike",25,120)
 		self.mountain = Bike("Shock-absorbing foldable mountain bike",30,275)
-		self.road = Bike("Lightweight 14-speed road bike",25,450)
+		self.road = Bike("Lightweight 14-speed road bike",25,400)
 		self.racing = Bike("Carbon-fibre high-speed racing bike",15,800)
 		self.inventory = {
 				"Training bike for kids":
@@ -33,6 +33,7 @@ class Shop(object):
 				}
 		self.margin = 0.2
 		self.profit = 0
+		print("Starting inventory for {}:".format(self.name))
 		for model in self.inventory:
 			print(model + ": " + str(self.inventory[model]["Count"]))
 	def getprice(self, model):
@@ -61,13 +62,30 @@ class Customer(object):
 				# Populate a dictionary with valid models
 				self.affordablerange[bikemodel] = self.pricecheck(bikemodel, shopname)
 		print(self.affordablerange)
-	def choosemodel():
+	def choosemodel(self):
 		# Lowest price
 		if self.spec == "lowprice":
-			#Use dict.itervalues
+			curmodel = ''
+			curprice = 9999
+			for model in self.affordablerange:
+				if self.affordablerange[model]["Cost"] < curprice:
+					curmodel = model
+					curprice = model["Cost"]
+			if curmodel == '':
+				print("Can't find the cheapest bike!")
+				return("ErrorNoneFound")
 		#Lowest weight
 		elif self.spec == "weight":
-			#Use dict.itervalues
+			curmodel = ''
+			curweight = 9999
+			for model in self.affordablerange:
+				if self.affordablerange[model]["Weight"] < curweight:
+					curmodel = model
+					curweight = model["Weight"]
+				print(curmodel + curweight)
+			if curmodel == '':
+				print("Can't find the lightest bike!")
+				return("ErrorNoneFound")
 		#must have teen
 		elif self.spec == "teen":
 			return("20-inch hybrid road-mountain bike")
