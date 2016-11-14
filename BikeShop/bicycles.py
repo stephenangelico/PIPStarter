@@ -33,7 +33,7 @@ class Shop(object):
 				}
 		self.margin = 0.2
 		self.profit = 0
-		print("Starting inventory for {}:".format(self.name))
+		print("\nStarting inventory for {}:".format(self.name))
 		for model in self.inventory:
 			print(model + ": " + str(self.inventory[model]["Count"]))
 	def getprice(self, model):
@@ -50,7 +50,7 @@ class Customer(object):
 		self.budget = budget
 		self.spec = spec
 		self.owned = ''
-		self.affordablerange = {}
+		self.affordablerange = []
 	def pricecheck(self, model, shopname):
 		return shopname.getprice(model)
 	def affordrange(self, shopname):
@@ -59,39 +59,44 @@ class Customer(object):
 			# Check if in stock first
 			# See if price is less than budget
 			if shopname.inventory[bikemodel]["Count"] > 0 and self.pricecheck(bikemodel, shopname) <= self.budget:
-				# Populate a dictionary with valid models
-				self.affordablerange[bikemodel] = self.pricecheck(bikemodel, shopname)
-		print(self.affordablerange)
-	def choosemodel(self):
+				# Populate an array with valid models
+				self.affordablerange.append(bikemodel)
+		print("\nModels that {} can afford:".format(self.name))
+		for bikemodel in self.affordablerange:
+			print(bikemodel + ": $" + str(self.pricecheck(bikemodel, shopname)))
+	def choosemodel(self, shopname):
+		self.affordrange(shopname)
+		#print(self.affordablerange)
 		# Lowest price
 		if self.spec == "lowprice":
 			curmodel = ''
 			curprice = 9999
 			for model in self.affordablerange:
-				if self.affordablerange[model]["Cost"] < curprice:
+				if self.pricecheck(model, shopname) < curprice:
 					curmodel = model
-					curprice = model["Cost"]
+					curprice = self.pricecheck(model, shopname)
 			if curmodel == '':
-				print("Can't find the cheapest bike!")
-				return("ErrorNoneFound")
+				print("\nCan't find the cheapest bike!")
+			else:
+				self.getbike(curmodel, shopname)
 		#Lowest weight
 		elif self.spec == "weight":
 			curmodel = ''
 			curweight = 9999
 			for model in self.affordablerange:
-				if self.affordablerange[model]["Weight"] < curweight:
+				if shopname.inventory[model]["Weight"] < curweight:
 					curmodel = model
-					curweight = model["Weight"]
-				print(curmodel + curweight)
+					curweight = shopname.inventory[model]["Weight"]
 			if curmodel == '':
-				print("Can't find the lightest bike!")
-				return("ErrorNoneFound")
+				print("\nCan't find the lightest bike!")
+			else:
+				self.getbike(curmodel, shopname)
 		#must have teen
 		elif self.spec == "teen":
-			return("20-inch hybrid road-mountain bike")
+			self.getbike("20-inch hybrid road-mountain bike", shopname)
 		#must have trainer
 		elif self.spec == "trainer":
-			return("Training bike for kids")
+			self.getbike("Training bike for kids", shopname)
 	def getbike(self, model, shopname):
 		#Get model price and check if within budget,
 		price = self.pricecheck(model, shopname)
