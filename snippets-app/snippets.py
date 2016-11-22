@@ -67,7 +67,12 @@ def get(name):
 	cursor = connection.cursor()
 	command = "select message from snippets where keyword=%s"
 	cursor.execute(command, (name,))
-	return cursor.fetchone()
+	row = cursor.fetchone()
+	if not row:
+		# No snippet found with that name.
+		return "404: Not Found"
+	else:
+		return row[0]
 
 if __name__ == "__main__":
 	main()
