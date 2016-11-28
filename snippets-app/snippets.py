@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import sys
 import logging
 import argparse
 import psycopg2
@@ -9,7 +10,12 @@ logging.basicConfig(filename="snippets.log", level=logging.DEBUG)
 
 # Connect to Postgres database
 logging.debug("Connecting to PostgreSQL...")
-connection = psycopg2.connect(database="snippets")
+try:
+	connection = psycopg2.connect(database="snippets")
+except psycopg2.OperationalError:
+	print("Could not connect to snippets database.\nIs the PostgreSQL server running?")
+	logging.error("Database connection failed: Operational Error")
+	sys.exit(1)
 logging.debug("Database connection established.")
 
 def main():
@@ -39,8 +45,12 @@ def main():
 		name, snippet = put(**arguments)
 		print("Stored {!r} as {!r}".format(snippet, name))
 	elif command == "get":
-		snippet = get(**arguments)
-		print("Retrieved snippet: {!r}".format(snippet))
+		try:
+			snippet = get(**arguments)
+			print("Retrieved snippet: {!r}".format(snippet))
+		except NameError:
+			print(arguments["name"] + ": 404 Not Found")
+			logging.debug("Snippet {} not found".format(arguments["name"]))
 def put(name, snippet):
 	"""
 	Store a snippet with an associated name.
@@ -57,7 +67,7 @@ def put(name, snippet):
 			connection.rollback()
 			command="update snippets set message=%s where keyword=%s"
 			cursor.execute(command, (snippet, name))
-		connection.commit()
+			logging.warning("Updating {!r} as {!r}.".format(name, snippet))
 	logging.debug("Snippet {} stored successfully.".format(name))
 	return name, snippet
 def get(name):
@@ -74,7 +84,7 @@ def get(name):
 		row = cursor.fetchone()
 	if not row:
 		# No snippet found with that name.
-		return "404: Not Found"
+		raise NameError(name)
 	else:
 		return row[0]
 
