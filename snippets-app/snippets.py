@@ -36,6 +36,10 @@ def main():
 	get_parser = subparsers.add_parser("get", help="Return a stored snippet")
 	get_parser.add_argument("name", help="Name of the snippet")
 	
+	# Subparser for the catalog command
+	logging.debug("Constructing catalog subparser")
+	catalog_parser = subparsers.add_parser("catalog", help="List stored snippets")
+	
 	arguments = parser.parse_args()
 	# Convert parsed arguments from Namespace to dictionary
 	arguments = vars(arguments)
@@ -51,6 +55,8 @@ def main():
 		except NameError:
 			print(arguments["name"] + ": 404 Not Found")
 			logging.debug("Snippet {} not found".format(arguments["name"]))
+	elif command == "catalog":
+		
 def put(name, snippet):
 	"""
 	Store a snippet with an associated name.
