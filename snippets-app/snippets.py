@@ -56,7 +56,10 @@ def main():
 			print(arguments["name"] + ": 404 Not Found")
 			logging.debug("Snippet {} not found".format(arguments["name"]))
 	elif command == "catalog":
-		
+		keys = catalog()
+		print("Available snippets:")
+		for snippetname in keys:
+			print(snippetname[0])
 def put(name, snippet):
 	"""
 	Store a snippet with an associated name.
@@ -93,6 +96,12 @@ def get(name):
 		raise NameError(name)
 	else:
 		return row[0]
+def catalog():
+	"""List stored snippet names."""
+	with connection, connection.cursor() as cursor:
+		cursor.execute("select keyword from snippets order by keyword")
+		keywords = cursor.fetchall()
+		return(keywords)
 
 if __name__ == "__main__":
 	main()
