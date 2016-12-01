@@ -40,6 +40,11 @@ def main():
 	logging.debug("Constructing catalog subparser")
 	catalog_parser = subparsers.add_parser("catalog", help="List stored snippets")
 	
+	# Subparser for the search utility
+	logging.debug("Constructing search subparser")
+	search_parser = subparsers.add_parser("search", help="Find a snippet by contained text")
+	search_parser.add_argument("term", help="Keyword to search for")
+	
 	arguments = parser.parse_args()
 	# Convert parsed arguments from Namespace to dictionary
 	arguments = vars(arguments)
@@ -60,6 +65,11 @@ def main():
 		print("Available snippets:")
 		for snippetname in keys:
 			print(snippetname[0])
+	elif command == "search":
+		results = search(**arguments)
+		print("Search results:")
+		for snippet in results:
+			print(snippet[0])
 def put(name, snippet):
 	"""
 	Store a snippet with an associated name.
@@ -98,10 +108,21 @@ def get(name):
 		return row[0]
 def catalog():
 	"""List stored snippet names."""
+	logging.info("Building catalog")
 	with connection, connection.cursor() as cursor:
 		cursor.execute("select keyword from snippets order by keyword")
 		keywords = cursor.fetchall()
 		return(keywords)
+def search(term):
+	"""Find a snippet by text contained within.
+	
+	Returns all matches.
+	"""
+	logging.info("Searching for snippet containing {!r}".format(term))
+	with connection, connection.cursor() as cursor:
+		cursor.execute("select keyword, message from snippets where message like %s", (term + "%",))
+		results = cursor.fetchall()
+		return(results)
 
 if __name__ == "__main__":
 	main()
