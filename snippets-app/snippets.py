@@ -110,7 +110,7 @@ def catalog():
 	"""List stored snippet names."""
 	logging.info("Building catalog")
 	with connection, connection.cursor() as cursor:
-		cursor.execute("select keyword from snippets order by keyword")
+		cursor.execute("select keyword from snippets where not hidden order by keyword")
 		keywords = cursor.fetchall()
 		return(keywords)
 def search(term):
@@ -120,7 +120,7 @@ def search(term):
 	"""
 	logging.info("Searching for snippet containing {!r}".format(term))
 	with connection, connection.cursor() as cursor:
-		cursor.execute("select keyword, message from snippets where message like %s", (term + "%",))
+		cursor.execute("select keyword, message from snippets where not hidden and message like %s", (term + "%",)) #FIXME: Only searching beginning of message field
 		results = cursor.fetchall()
 		return(results)
 
