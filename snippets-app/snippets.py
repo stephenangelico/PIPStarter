@@ -120,7 +120,7 @@ def search(term):
 	"""
 	logging.info("Searching for snippet containing {!r}".format(term))
 	with connection, connection.cursor() as cursor:
-		cursor.execute("select keyword, message from snippets where not hidden and message like %s", (term + "%",)) #FIXME: Only searching beginning of message field
+		cursor.execute("select keyword, message from snippets where not hidden and message like %s", ("%" + term + "%",))
 		results = cursor.fetchall()
 		return(results)
 
