@@ -19,8 +19,8 @@ class Item(Base):
 	description = Column(String)
 	start_time = Column(DateTime, default=datetime.utcnow)
 
-class Customer(Base):
-	__tablename__ = "customers"
+class User(Base):
+	__tablename__ = "users"
 	
 	uid = Column(Integer, primary_key=True)
 	username = Column(String, nullable=False)
