@@ -17,6 +17,7 @@ class Item(Base):
 	id = Column(Integer, primary_key=True)
 	name = Column(String, nullable=False)
 	description = Column(String)
+	category = Column(String, nullable=False)
 	start_time = Column(DateTime, default=datetime.utcnow)
 
 class User(Base):
@@ -34,4 +35,6 @@ class Bid(Base):
 	price = Column(Float, nullable=False)
 	bid_time = Column(DateTime, default=datetime.utcnow)
 
+Base.metadata.drop_all(engine)
 Base.metadata.create_all(engine)
+
