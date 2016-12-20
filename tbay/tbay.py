@@ -35,6 +35,7 @@ class Bid(Base):
 	price = Column(Float, nullable=False)
 	bid_time = Column(DateTime, default=datetime.utcnow)
 
-Base.metadata.drop_all(engine)
-Base.metadata.create_all(engine)
+if __name__ == "__main__":
+	Base.metadata.drop_all(engine)
+	Base.metadata.create_all(engine)
 
