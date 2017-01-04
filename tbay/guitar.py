@@ -23,6 +23,10 @@ class Guitar(Base):
 	
 	manufacturer_id = Column(Integer, ForeignKey('manufacturer.id'), nullable=False)
 	
+if __name__ == "__main__":
+	Base.metadata.drop_all(engine)
+	Base.metadata.create_all(engine)
+
 fender = Manufacturer(name="Fender")
 strat = Guitar(name="Stratocaster", manufacturer=fender)
 tele = Guitar(name="Telecaster")
