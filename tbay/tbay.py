@@ -53,7 +53,7 @@ class Bid(Base):
 	item_id = Column(Integer, ForeignKey('items.id'), nullable=False)
 	bidder_uid = Column(Integer, ForeignKey('users.uid'), nullable=False)
 
-def createbid(price, itemname, username):
+#def createbid(price, itemname, username):
 	#bid1 = Bid(price=20, item_id=1, bidder_uid=2)
 	#              ^ amount    ^ Buzz       ^ user stephena
 	# Returns the description of all of the basesballs
@@ -61,7 +61,7 @@ def createbid(price, itemname, username):
 	#A new bid must be greater than the last one
 	
 
-def endauction(item_id):
+#def endauction(item_id):
 	#Find all bids that are associated with given item ID
 	# Return the item id and description for all baseballs which were created in the past.  Remember to import the datetime object: from datetime import datetime
 	#session.query(Item.id, Item.description).filter(Item.name == "baseball", Item.start_time < datetime.utcnow()).all()
