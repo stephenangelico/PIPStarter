@@ -53,18 +53,45 @@ class Bid(Base):
 	item_id = Column(Integer, ForeignKey('items.id'), nullable=False)
 	bidder_uid = Column(Integer, ForeignKey('users.uid'), nullable=False)
 
-#def createbid(price, itemname, username):
+def createbid(price, itemname, username):
 	#bid1 = Bid(price=20, item_id=1, bidder_uid=2)
 	#              ^ amount    ^ Buzz       ^ user stephena
 	# Returns the description of all of the basesballs
 	#session.query(Item.description).filter(Item.name == "baseball").all()
 	#A new bid must be greater than the last one
+	try:
+		price = float(price)
+	except ValueError:
+		print("Please enter a valid bid value")
+		return None
+	#TODO: Check to see if new bid is greater than previous bid. If lesser, reject bid.
+	biditem = session.query(Item.id).filter(Item.name == itemname).first()
+	if biditem is None:
+		print("Invalid item name. Please enter a known item.")
+		return None
+	biduser = session.query(User.uid).filter(User.username == username).first()
+	if biduser is None:
+		print("Username invalid. Perhaps you need to log in?")
+		return None
+	newbid = Bid(price=price, item_id=biditem.id, bidder_uid=biduser.uid)
+	session.add(newbid)
+	session.commit()
 	
+def highbid(item_id):
+	#Return entire highest bid object
 
-#def endauction(item_id):
+def endauction(itemname):
 	#Find all bids that are associated with given item ID
 	# Return the item id and description for all baseballs which were created in the past.  Remember to import the datetime object: from datetime import datetime
 	#session.query(Item.id, Item.description).filter(Item.name == "baseball", Item.start_time < datetime.utcnow()).all()
+	#Assuming highbid() does its work, the latest bid should be the successful one.
+	solditem = session.query(Item.id,Item.name).filter(Item.name == itemname).first()
+	if solditem is None:
+		print("Invalid item name. Please enter a known item.")
+		return None
+	winbid = highbid(solditem.id)
+	#TODO: Get winning user
+	print("{0} placed the highest bid of {1} on the {2}".format([winuser, bidvalue, solditem.name])
 
 if __name__ == "__main__":
 	Base.metadata.drop_all(engine)
