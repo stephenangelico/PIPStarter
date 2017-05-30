@@ -6,6 +6,9 @@ def divide_pay(amount, staff_hours):
 	for person in staff_hours:
 		total_hours += staff_hours[person]
 		
+	if total_hours == 0:
+		raise ValueError("No hours entered")
+	
 	per_hour = amount / total_hours
 	
 	staff_pay = {}
